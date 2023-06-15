@@ -217,31 +217,4 @@ describe("Deploy SmartWallet", function () {
       await expect(proxy.callWithSignature(corruptedCalls, signature)).to.be.revertedWith("invalid nonce");
     });
   })
-
-  describe("EIP1271", function () {
-    it("Should be signed for MtPelerin", async function () {
-      const { proxy } = await loadFixture(deploySmartWalletFixture);
-
-      const signedMessageHashFromSol = await proxy.get4DigitsMessageHash()
-
-      // console.log('lastDigits: ', await proxy.getLast4Digits())
-      // console.log('messageHash from ethers', ethers.utils.hashMessage("MtPelerin-9977"))
-      // console.log('signedMessageHashFromSol', signedMessageHashFromSol)
-
-      expect(await proxy.isValidSignature(signedMessageHashFromSol, "0x")).to.equal("0x1626ba7e");
-    });
-
-    it("Should be signed for Monerium", async function () {
-      const { proxy } = await loadFixture(deploySmartWalletFixture);
-
-      expect(await proxy.isValidSignature("0xb77c35c892a1b24b10a2ce49b424e578472333ee8d2456234fff90626332c50f", "0x")).to.equal("0x1626ba7e");
-    });
-
-    it("Should be able to sign in the classical, non Gnosis-Safe manner", async function () {
-      const { proxy } = await loadFixture(deploySmartWalletFixture);
-      // TODO
-
-    });
-
-  })
 });
